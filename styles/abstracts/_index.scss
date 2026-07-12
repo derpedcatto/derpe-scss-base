@@ -1,0 +1,6 @@
+// Zero-output: @use this from any component for tokens + mixins at no CSS cost.
+//   @use 'path/to/styles/abstracts' as *;
+@forward 'config';
+@forward 'functions';
+@forward 'mixins';
+@forward 'type'; // fluid; swap for 'type-stepped' to step sizes at md

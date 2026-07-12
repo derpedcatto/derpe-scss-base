@@ -1,0 +1,43 @@
+@use "sass:list";
+@use "sass:map";
+@use "../abstracts" as *;
+
+@layer base {
+  :root {
+    // Follows the OS scheme; [data-theme] below forces one
+    color-scheme: light dark;
+
+    @each $name, $pair in $colors {
+      --color-#{$name}: light-dark(
+        #{list.nth($pair, 1)},
+        #{list.nth($pair, 2)}
+      );
+    }
+
+    --transition-duration: #{$transition-duration};
+
+    @each $name, $_ in $gutters {
+      @if $name != base and not map.has-key($breakpoints, $name) {
+        @error 'Unknown $gutters key `#{$name}` - must be `base` or a breakpoint name.';
+      }
+    }
+
+    --gutter: #{map.get($gutters, base)};
+
+    @each $name, $_ in $breakpoints {
+      @if map.has-key($gutters, $name) {
+        @include from($name) {
+          --gutter: #{map.get($gutters, $name)};
+        }
+      }
+    }
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+}

@@ -1,0 +1,43 @@
+@use '../abstracts' as *;
+
+@layer base {
+  html {
+    font-size: 100%; // respects the user's browser font-size setting
+  }
+
+  body {
+    font-family: $font-stack;
+    @include text-body;
+  }
+
+  h1 {
+    @include text-h1;
+  }
+
+  h2 {
+    @include text-h2;
+  }
+
+  h3 {
+    @include text-h3;
+  }
+
+  h4 {
+    @include text-h4;
+  }
+
+  p {
+    @include text-body;
+  }
+
+  small {
+    @include text-small;
+  }
+
+  button,
+  input[type='button'],
+  input[type='submit'],
+  input[type='reset'] {
+    @include text-button;
+  }
+}

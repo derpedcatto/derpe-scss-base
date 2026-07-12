@@ -1,0 +1,33 @@
+@use "sass:map";
+@use "sass:math";
+@use "config";
+
+@function round-to($n, $places: 4) {
+  $f: math.pow(10, $places);
+  @return math.div(math.round($n * $f), $f);
+}
+
+@function bp($name) {
+  @if not map.has-key(config.$breakpoints, $name) {
+    @error 'Unknown breakpoint `#{$name}`. Available: #{map.keys(config.$breakpoints)}.';
+  }
+  @return map.get(config.$breakpoints, $name);
+}
+
+// Fluid size between two viewport widths: fluid(32, 48) → clamp(...).
+// Args are unitless px; output is rem so browser font-size still scales it.
+@function fluid(
+  $min-px,
+  $max-px,
+  $from: config.$fluid-from,
+  $to: config.$fluid-to
+) {
+  $slope: math.div($max-px - $min-px, $to - $from);
+  $intercept: math.div($min-px - $slope * $from, 16);
+
+  @return clamp(
+    #{math.div($min-px, 16)}rem,
+    #{round-to($intercept)}rem + #{round-to($slope * 100)}vw,
+    #{math.div($max-px, 16)}rem
+  );
+}

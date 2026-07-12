@@ -1,0 +1,24 @@
+{
+  "name": "derpe-scss-base",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reusable SCSS foundation: design tokens, mixins, base styles.",
+  "files": [
+    "styles"
+  ],
+  "exports": {
+    "./*": "./styles/*"
+  },
+  "scripts": {
+    "build": "sass styles/main.scss dist/main.css --no-source-map && postcss dist/main.css --replace"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "devDependencies": {
+    "postcss": "^8.4.0",
+    "postcss-cli": "^11.0.0",
+    "postcss-preset-env": "^10.0.0",
+    "sass": "^1.80.0"
+  }
+}

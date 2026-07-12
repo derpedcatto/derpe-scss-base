@@ -1,0 +1,96 @@
+@use "config";
+@use "functions" as fn;
+
+// Breakpoints — range syntax avoids 1px gaps at fractional widths.
+
+@mixin from($bp) {
+  @media (width >= #{fn.bp($bp)}) {
+    @content;
+  }
+}
+
+@mixin until($bp) {
+  @media (width < #{fn.bp($bp)}) {
+    @content;
+  }
+}
+
+@mixin between($from-bp, $to-bp) {
+  @media (#{fn.bp($from-bp)} <= width < #{fn.bp($to-bp)}) {
+    @content;
+  }
+}
+
+// Breakout grid: children are centered and capped at $max-container-width;
+// full-bleed children (sliders, hero images) opt out with .full-bleed.
+// Children are grid items, so their vertical margins don't collapse.
+@mixin content-grid {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter), 1fr)
+    [content-start] min(
+      100% - var(--gutter) * 2,
+      #{config.$max-container-width}
+    )
+    [content-end] minmax(var(--gutter), 1fr)
+    [full-end];
+
+  > * {
+    grid-column: content;
+  }
+
+  > .full-bleed {
+    grid-column: full;
+  }
+}
+
+// hover:hover guard prevents sticky hover states on touch devices.
+@mixin hover($property, $to-value, $duration: var(--transition-duration)) {
+  transition: #{$property} $duration;
+
+  @media (hover: hover) {
+    &:hover {
+      #{$property}: $to-value;
+    }
+  }
+}
+
+// Single-line ellipsis truncation (needs a constrained width).
+@mixin text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Multi-line ellipsis (truncates at the line stated in $lines var).
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}
+
+// Visually hidden but readable by screen readers.
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Needs the global `shimmer` keyframes from base/globals.
+@mixin skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton-start) 25%,
+    var(--color-skeleton-highlight) 50%,
+    var(--color-skeleton-end) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
