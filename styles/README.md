@@ -53,15 +53,27 @@ single `@use` site (a thin `app.scss` that then loads `main`):
 ```scss
 @use 'styles/abstracts' with (
   $max-container-width: 1140px,
-  $font-stack: ('Inter', sans-serif)
+  $font-stack-body: ('Inter', sans-serif),
+  $font-stack-heading: ('Clash Display', sans-serif) // omit for single-font setup
 );
 @use 'styles/main';
 ```
 
-Colors and layout scalars are exposed as CSS custom properties — use
-`var(--color-primary)`, `var(--color-text)`, `var(--gutter)` in components rather
-than hard-coding values. Breakpoints stay Sass values (custom properties can't be
+Colors, fonts, and layout scalars are exposed as CSS custom properties — use
+`var(--color-primary)`, `var(--color-text)`, `var(--gutter)`, `var(--font-body)`,
+`var(--font-heading)` in components rather than hard-coding values. Breakpoints stay Sass values (custom properties can't be
 used in `@media`); reach them via the `from()` / `until()` / `between()` mixins.
+
+## Fonts
+
+Two tokens, two custom properties: `$font-stack-body` → `--font-body`,
+`$font-stack-heading` → `--font-heading`. The heading stack defaults to `null`,
+which resolves `--font-heading` to `var(--font-body)` — a single-font project
+sets only `$font-stack-body`. The type role mixins carry their own `font-family`
+(`text-h1`…`text-h4` use `--font-heading`; `text-body`, `text-small`,
+`text-button` use `--font-body`), so a role looks right on any element. To put
+the heading font on something that isn't a heading (pull quotes, stat numbers),
+write `font-family: var(--font-heading)` — no mixin changes needed.
 
 ## Fluid vs. stepped type
 

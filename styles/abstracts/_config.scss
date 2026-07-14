@@ -15,7 +15,9 @@ $gutters: (
   xl: 40px,
 ) !default;
 
-$font-stack: ("Mont", sans-serif) !default;
+// null heading stack = use the body font (single-font setup).
+$font-stack-body: ("Mont", sans-serif) !default;
+$font-stack-heading: null !default;
 
 // Viewport range (unitless px) over which fluid() type scales
 $fluid-from: 375 !default;

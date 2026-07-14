@@ -36,7 +36,12 @@ theming engine) needs it transpiled for browsers older than mid-2024. Vite picks
 it up automatically; no dist build step needed.
 
 **3. Fonts** — the base loads no font files. Add the project's `@font-face`
-rules (use `font-display: swap`) and set `$font-stack` in the override.
+rules (use `font-display: swap`) and set `$font-stack-body` in the
+override. For a duo-font setup also set `$font-stack-heading`; left unset,
+headings use the body font. Both are exposed as `--font-body` /
+`--font-heading`, and the type role mixins apply them automatically — so a
+component that wants the heading font just writes
+`font-family: var(--font-heading)`.
 
 **4. Per-project overrides** — configure at the `@use` site, never by editing
 the shared files:
@@ -44,7 +49,8 @@ the shared files:
 ```scss
 @use 'scss-base/styles/abstracts' with (
   $max-container-width: 1280px,
-  $font-stack: ('Inter', sans-serif),
+  $font-stack-body: ('Inter', sans-serif),
+  $font-stack-heading: ('Clash Display', sans-serif), // omit for single-font setup
   $colors: ( /* role: (light, dark) */ ),
 );
 ```
@@ -85,7 +91,8 @@ Every token in `_config.scss` is `!default`. Rules:
 | Token | What it does | Affects layout / calc? |
 |---|---|---|
 | `$colors` | `role: (light, dark)` palette → `--color-*` | — |
-| `$font-stack` | `body` font family | — |
+| `$font-stack-body` | body/base font family → `--font-body` | — |
+| `$font-stack-heading` | heading font family → `--font-heading` (defaults to the body font) | — |
 | `$breakpoints` | `sm/md/lg/xl` → the `from/until/between` mixins | Yes — every responsive rule shifts |
 | `$max-container-width` | max width of constrained `content-grid` content | Yes — content column width |
 | `$gutters` | page edge padding → `--gutter` (`base` + any breakpoint-named tiers) | Yes — page margins & grid columns |
@@ -97,7 +104,7 @@ Example:
 ```scss
 @use 'scss-base/styles/abstracts' with (
   $max-container-width: 1280px,
-  $font-stack: ('Inter', sans-serif),
+  $font-stack-body: ('Inter', sans-serif),
   $gutters: (base: 20px, sm: 32px, xl: 48px),
   $breakpoints: (sm: 600px, md: 768px, lg: 1024px, xl: 1280px),
 );
@@ -187,6 +194,8 @@ Because children are grid items: vertical margins between them **don't collapse*
   `between(md, lg)`. An unknown name errors at compile time.
 - Type is role mixins (`text-h1`, `text-body`…), not element selectors. When a
   design gives you an `<h2>` that should look like an h3, `@include text-h3`.
+  Each role carries its font: heading roles set `var(--font-heading)`, text
+  roles set `var(--font-body)` — so a role looks right on any element.
 - Tailor the roles in `_type.scss` to each project's design — that file is the
   expected per-project edit. Fluid is the default; swap the last `@forward` in
   `abstracts/_index.scss` to `'type-stepped'` for sizes that step at `md` —

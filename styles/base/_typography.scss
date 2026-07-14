@@ -1,4 +1,4 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 @layer base {
   html {
@@ -6,7 +6,6 @@
   }
 
   body {
-    font-family: $font-stack;
     @include text-body;
   }
 
@@ -26,6 +25,11 @@
     @include text-h4;
   }
 
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+
   p {
     @include text-body;
   }
@@ -35,9 +39,9 @@
   }
 
   button,
-  input[type='button'],
-  input[type='submit'],
-  input[type='reset'] {
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
     @include text-button;
   }
 }
