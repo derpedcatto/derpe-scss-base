@@ -1,85 +1,26 @@
-// Design tokens, all !default so a project can override at the @use site
+// Design tokens, all !default so a project can override at the @use site.
+// Values live in `defaults` so a project can read them without configuring
+// this module — required for extending a map instead of replacing it
+// (see README).
+@use "defaults";
 
-$breakpoints: (
-  sm: 576px,
-  md: 744px,
-  lg: 992px,
-  xl: 1200px,
-) !default;
+$breakpoints: defaults.$breakpoints !default;
 
-$max-container-width: 1280px !default;
+$max-container-width: defaults.$max-container-width !default;
 
-$gutters: (
-  base: 16px,
-  sm: 24px,
-  xl: 40px,
-) !default;
+$gutters: defaults.$gutters !default;
 
 // null heading stack = use the body font (single-font setup).
-$font-stack-body: ("Mont", sans-serif) !default;
-$font-stack-heading: null !default;
+$font-stack-body: defaults.$font-stack-body !default;
+$font-stack-heading: defaults.$font-stack-heading !default;
 
 // Viewport range (unitless px) over which fluid() type scales
-$fluid-from: 375 !default;
-$fluid-to: 1200 !default;
+$fluid-from: defaults.$fluid-from !default;
+$fluid-to: defaults.$fluid-to !default;
 
 // role: (light, dark).
-// Write colors like 'green' or 'red' so they aren't parsed as Sass color keywords
-$colors: (
-  bg: (
-    #f5f5fa,
-    #06081f,
-  ),
-  surface-1: (
-    #ffffff,
-    #0a0a15,
-  ),
-  surface-2: (
-    #fafbfc,
-    #1b1b36,
-  ),
-  elements: (
-    #dddfee,
-    #393e60,
-  ),
-  icons: (
-    #a9aed1,
-    #545a83,
-  ),
-  primary: (
-    #6574db,
-    #243399,
-  ),
-  secondary: (
-    #8d99e2,
-    #152484,
-  ),
-  text: (
-    #0d0f17,
-    #e0e2f9,
-  ),
-  accent: (
-    #4d0000,
-    #ff1a1a,
-  ),
-  accent-hover: (
-    #682626,
-    #e01717,
-  ),
-  skeleton-start: (
-    #e1e3ef,
-    #151828,
-  ),
-  skeleton-highlight: (
-    #ffffff,
-    #272c49,
-  ),
-  skeleton-end: (
-    #d7daea,
-    #151828,
-  ),
-) !default;
+$colors: defaults.$colors !default;
 
-$transition-duration: 0.15s !default;
-$icon-hover-scale: 1.2 !default;
-$image-hover-scale: 1.1 !default;
+$transition-duration: defaults.$transition-duration !default;
+$icon-hover-scale: defaults.$icon-hover-scale !default;
+$image-hover-scale: defaults.$image-hover-scale !default;

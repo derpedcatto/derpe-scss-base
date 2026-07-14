@@ -13,6 +13,7 @@ styles/
   _layers.scss          @layer order — must load first
   main.scss             entry point, import once per app
   abstracts/            ZERO CSS output — safe to @use from every component
+    _defaults.scss      canonical default token values (readable pre-config)
     _config.scss        all tokens, all !default (override per project)
     _functions.scss     bp(), fluid()
     _mixins.scss        breakpoints, content-grid, hover, truncation, visually-hidden, skeleton
@@ -112,18 +113,26 @@ Example:
 
 ### Extending a map instead of replacing it
 
-Merge the default map with your additions before passing it to `with (...)`:
+Merge the default map from `abstracts/defaults` with your additions before
+passing it to `with (...)`:
 
 ```scss
 @use 'sass:map';
-@use 'scss-base/styles/abstracts/config' as base;
+@use 'scss-base/styles/abstracts/defaults' as base;
 
-$my-colors: map.merge(base.$colors, (
-  info: (#2f80ed, #56ccf2),
-));
-
-@use 'scss-base/styles/abstracts' with ($colors: $my-colors);
+@use 'scss-base/styles/abstracts' with (
+  $colors: map.merge(base.$colors, (
+    info: (#2f80ed, #56ccf2),
+  )),
+);
 ```
+
+Read defaults from `abstracts/defaults` **only** — never from `abstracts` or
+`abstracts/config`. A Sass module can be configured just once, on its first
+load, so loading `config` (directly or via `abstracts`) before the `with (...)`
+locks in the defaults and errors with "This module was already loaded, so it
+can't be configured". `defaults` takes no configuration, so it's always safe
+to load early.
 
 New keys work everywhere the defaults do: a new `$colors` role gets its
 `--color-*` automatically, a new `$breakpoints` name works in the mixins, and

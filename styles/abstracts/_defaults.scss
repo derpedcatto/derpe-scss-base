@@ -1,0 +1,86 @@
+// Canonical default token values.
+// Never override values in this file; configure `abstracts` at the @use site.
+
+$breakpoints: (
+  sm: 576px,
+  md: 744px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+$max-container-width: 1280px;
+
+$gutters: (
+  base: 16px,
+  sm: 24px,
+  xl: 40px,
+);
+
+// null heading stack = use the body font (single-font setup).
+$font-stack-body: ("Mont", sans-serif);
+$font-stack-heading: null;
+
+// Viewport range (unitless px) over which fluid() type scales
+$fluid-from: 375;
+$fluid-to: 1200;
+
+// role: (light, dark).
+// Write colors like 'green' or 'red' so they aren't parsed as Sass color keywords
+$colors: (
+  bg: (
+    #f5f5fa,
+    #06081f,
+  ),
+  surface-1: (
+    #ffffff,
+    #0a0a15,
+  ),
+  surface-2: (
+    #fafbfc,
+    #1b1b36,
+  ),
+  elements: (
+    #dddfee,
+    #393e60,
+  ),
+  icons: (
+    #a9aed1,
+    #545a83,
+  ),
+  primary: (
+    #6574db,
+    #243399,
+  ),
+  secondary: (
+    #8d99e2,
+    #152484,
+  ),
+  text: (
+    #0d0f17,
+    #e0e2f9,
+  ),
+  accent: (
+    #4d0000,
+    #ff1a1a,
+  ),
+  accent-hover: (
+    #682626,
+    #e01717,
+  ),
+  skeleton-start: (
+    #e1e3ef,
+    #151828,
+  ),
+  skeleton-highlight: (
+    #ffffff,
+    #272c49,
+  ),
+  skeleton-end: (
+    #d7daea,
+    #151828,
+  ),
+);
+
+$transition-duration: 0.15s;
+$icon-hover-scale: 1.2;
+$image-hover-scale: 1.1;
